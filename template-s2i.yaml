@@ -15,12 +15,12 @@ parameters:
 - name: GITHUB_URL
   description: URL of the GitHub repo where the app is located
   required: true
-  value: https://github.com/Socuz/broken-link.git
+  value: https://github.com/CSCfi/broken-link-s2i.git
 
 - name: GITHUB_BRANCH
   description: Branch used in the GitHub repo
   required: true
-  value: rahti3
+  value: main
 
 objects:
 - apiVersion: build.openshift.io/v1
