@@ -22,6 +22,10 @@ parameters:
   required: true
   value: main
 
+- name: EMAIL_RECIPIENT
+  description: Email address of the recipient
+  required: true
+
 objects:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
@@ -41,6 +45,9 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
+        env:
+        - name: EMAIL_RECIPIENT
+          value: ${EMAIL_RECIPIENT}
         from:
           kind: ImageStreamTag
           name: python:3.9

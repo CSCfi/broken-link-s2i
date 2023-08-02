@@ -1,7 +1,9 @@
 import subprocess
 import smtplib
+import os
 from email.message import EmailMessage
 
+EMAIL_RECIPIENT = os.environ['EMAIL_RECIPIENT']
 FILENAME = "linkchecker-out.txt"
 OUTPUTFILE = "404.txt"
 URL = "https://docs.csc.fi/"
@@ -28,7 +30,7 @@ with open(FILENAME, "r", encoding="utf-8") as f_in:
 msg = EmailMessage()
 msg["From"] = "noreply@csc.fi"
 msg["Subject"] = "Broken links report"
-msg["To"] = "<insert_email_address>"
+msg["To"] = os.getenv('EMAIL_RECIPIENT')
 msg.set_content("You will find attached the broken links report of docs.csc.fi")
 msg.add_attachment(open(OUTPUTFILE, "r", encoding="utf-8").read())
 
