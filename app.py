@@ -28,7 +28,7 @@ with open(FILENAME, "r", encoding="utf-8") as f_in:
 msg = EmailMessage()
 msg["From"] = "noreply@csc.fi"
 msg["Subject"] = "Broken links report"
-msg["To"] = "tristan.perard@csc.fi"
+msg["To"] = "<insert_email_address>"
 msg.set_content("You will find attached the broken links report of docs.csc.fi")
 msg.add_attachment(open(OUTPUTFILE, "r", encoding="utf-8").read())
 
