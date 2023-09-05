@@ -5,15 +5,14 @@ Simply process the file `template-s2i.yaml` to create:
 - Image Stream
 - Cronjob
 
-You will need four parameters:
-- NAMESPACE: Name of your Rahti project/namespace
+You will need three parameters:
 - GITHUB_URL: URL of the GitHub repo where to source for building the image
 - GITHUB_BRANCH: Name of the GitHub branch. Default "main"
 - EMAIL_RECIPIENT: Email address of the recipient
 
 Example:
 ```shell
-oc process -f template-s2i.yaml -p NAMESPACE="my-project-test" -p GITHUB_URL="https://github.com/CSCfi/broken-link-s2i.git" -p GITHUB_BRANCH="otherbranch" -p EMAIL_RECIPIENT="some.address@world.com" | oc apply -f - 
+oc process -f template-s2i.yaml -p GITHUB_URL="https://github.com/CSCfi/broken-link-s2i.git" -p GITHUB_BRANCH="otherbranch" -p EMAIL_RECIPIENT="some.address@world.com" | oc apply -f - 
 ```
 You can modify the schedule of the cronjob by modifying the line `schedule`:
 ```yaml
