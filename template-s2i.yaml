@@ -8,6 +8,10 @@ metadata:
     description: "Check links broken"
   name: broken-link
 parameters:
+- name: NAMESPACE
+  description: Specify your namespace where you will deploy the template
+  required: true
+
 - name: GITHUB_URL
   description: URL of the GitHub repo where the app is located
   required: true
@@ -29,6 +33,7 @@ objects:
     labels:
       app: broken-link
     name: broken-link
+    namespace: ${NAMESPACE}
   spec:
     output:
       to:
@@ -46,7 +51,7 @@ objects:
           value: ${EMAIL_RECIPIENT}
         from:
           kind: ImageStreamTag
-          name: python:3.9
+          name: python:3.9-ubi8
           namespace: openshift
       type: Source
     triggers:
@@ -59,14 +64,16 @@ objects:
     labels:
       app: broken-link
     name: broken-link
+    namespace: ${NAMESPACE}
   spec:
     lookupPolicy:
       local: true
 
-- apiVersion: batch/v1beta1
+- apiVersion: batch/v1
   kind: CronJob
   metadata:
     name: broken-link
+    namespace: ${NAMESPACE}
   spec:
     schedule: '0 3 2 * *'
     jobTemplate:
@@ -75,5 +82,5 @@ objects:
           spec:
             containers:
               - name: broken-link
-                image: broken-link
+                image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/broken-link:latest
             restartPolicy: OnFailure
