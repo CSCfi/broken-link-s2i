@@ -5,7 +5,7 @@ Simply process the file `template-s2i.yaml` to create:
 - Image Stream
 - Cronjob
 
-You will need three parameters:
+You will need four parameters:
 - NAMESPACE: Specify your namespace where you will deploy the template
 - GITHUB_URL: URL of the GitHub repo where to source for building the image
 - GITHUB_BRANCH: Name of the GitHub branch. Default "main"
