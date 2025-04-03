@@ -27,10 +27,12 @@ report.to_file(OUTPUT_FILENAME)
 
 msg = EmailMessage()
 msg["From"] = "noreply@csc.fi"
-msg["Subject"] = "Broken links report"
+msg["Subject"] = f"Broken links report for {report.month}"
 msg["To"] = os.getenv('EMAIL_RECIPIENT')
-msg.set_content("You will find attached the broken links report of docs.csc.fi")
-msg.add_attachment(open(OUTPUTFILE, "r", encoding="utf-8").read(), subtype='txt', filename='404.txt')
+msg.set_content(f"You will find attached the broken links report of {URL} for {report.month}.")
+msg.add_attachment(open(OUTPUT_FILENAME, "r", encoding="utf-8").read(),
+                   subtype=ATTACHMENT_MIME_SUBTYPE,
+                   filename=ATTACHMENT_FILENAME)
 
 s = smtplib.SMTP('smtp.pouta.csc.fi')
 s.send_message(msg)
