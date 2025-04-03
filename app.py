@@ -3,29 +3,27 @@ import smtplib
 import os
 from email.message import EmailMessage
 
+from parser.report import Report
+
+
+OUTPUT_MARKDOWN = os.environ['OUTPUT_IN_MARKDOWN'].lower() == "true"
 EMAIL_RECIPIENT = os.environ['EMAIL_RECIPIENT']
-FILENAME = "linkchecker-out.txt"
-OUTPUTFILE = "404.txt"
+INPUT_FILENAME = "linkchecker-out.xml"
+OUTPUT_FILENAME = "404.md" if OUTPUT_MARKDOWN else "404.txt"
+ATTACHMENT_FILENAME = "report.md" if OUTPUT_MARKDOWN else "report.txt"
+ATTACHMENT_MIME_SUBTYPE = "markdown" if OUTPUT_MARKDOWN else "plain"
 URL = "https://docs.csc.fi/"
-subprocess.run(["linkchecker", "--check-extern", "--user-agent", "Mozilla/5.0 (compatible; LinkChecker/9.3; +http://wummel.github.io/linkchecker/)", "-F", "text", "-q", URL], check=False)
 
-with open(FILENAME, "r", encoding="utf-8") as f_in:
-    file = f_in.read()
-    result = "Result     Error: 404 Not Found"
-    counter = 0
 
-    with open("404.txt", "w+", encoding="utf-8") as f_out:
-        print("BROKEN LINKS REPORT: \n")
-        for line in file.split('\n\n'):
-            if result in line:
-                url = line.split('\n')[0].split('        ')[-1]
-                name = line.split('\n')[1].split('       ')[-1]
-                parent_url = line.split('\n')[2].split(' ')[-5].strip(',')
-                counter += 1
-                print(f"URL: {url}\nName: {name}\nParent URL: {parent_url}\n{result}\n")
-                f_out.write(f"URL: {url}\nName: {name}\nParent URL: {parent_url}\n{result}\n\n")
-        print(f"Processed: {counter}")
-        f_out.write(f"Processed: {counter}")
+subprocess.run(["linkchecker", "--check-extern", "--user-agent", "Mozilla/5.0 (compatible; LinkChecker/9.3; +http://wummel.github.io/linkchecker/)", "-F", "xml", "-q", URL], check=False)
+
+print("BROKEN LINKS REPORT: \n")
+report = Report(INPUT_FILENAME)
+results = report.results
+for url, name, parent_url, result in results:
+    print(f"URL: {url}\nName: {name}\nParent URL: {parent_url}\nResult: {result}\n")
+print(f"Processed: {len(results)}")
+report.to_file(OUTPUT_FILENAME)
 
 msg = EmailMessage()
 msg["From"] = "noreply@csc.fi"

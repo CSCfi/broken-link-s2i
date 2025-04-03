@@ -26,6 +26,11 @@ parameters:
   description: Email address of the recipient
   required: true
 
+- name: OUTPUT_MARKDOWN
+  description: Send email attachment in Markdown format
+  value: false
+  required: false
+
 objects:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
@@ -49,6 +54,8 @@ objects:
         env:
         - name: EMAIL_RECIPIENT
           value: ${EMAIL_RECIPIENT}
+        - name: OUTPUT_MARKDOWN
+          value: ${OUTPUT_MARKDOWN}
         from:
           kind: ImageStreamTag
           name: python:3.9-ubi8

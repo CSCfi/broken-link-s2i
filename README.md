@@ -11,6 +11,9 @@ You will need four parameters:
 - GITHUB_BRANCH: Name of the GitHub branch. Default "main"
 - EMAIL_RECIPIENT: Email address of the recipient
 
+Optional parameters:
+- OUTPUT_MARKDOWN: (true|false) Send email attachment in Markdown format. Default "false"
+
 Example:
 ```shell
 oc process -f template-s2i.yaml -p NAMESPACE="mynamespace" -p GITHUB_URL="https://github.com/CSCfi/broken-link-s2i.git" -p GITHUB_BRANCH="otherbranch" -p EMAIL_RECIPIENT="some.address@world.com" | oc apply -f - 
