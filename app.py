@@ -6,12 +6,12 @@ from email.message import EmailMessage
 from parser.report import Report
 
 
-OUTPUT_MARKDOWN = os.environ['OUTPUT_IN_MARKDOWN'].lower() == "true"
+OUTPUT_IN_MARKDOWN = os.environ['OUTPUT_IN_MARKDOWN'].lower() == "true"
 EMAIL_RECIPIENT = os.environ['EMAIL_RECIPIENT']
 INPUT_FILENAME = "linkchecker-out.xml"
-OUTPUT_FILENAME = "404.md" if OUTPUT_MARKDOWN else "404.txt"
-ATTACHMENT_FILENAME = "report.md" if OUTPUT_MARKDOWN else "report.txt"
-ATTACHMENT_MIME_SUBTYPE = "markdown" if OUTPUT_MARKDOWN else "plain"
+OUTPUT_FILENAME = "404.md" if OUTPUT_IN_MARKDOWN else "404.txt"
+ATTACHMENT_FILENAME = "report.md" if OUTPUT_IN_MARKDOWN else "report.txt"
+ATTACHMENT_MIME_SUBTYPE = "markdown" if OUTPUT_IN_MARKDOWN else "plain"
 URL = "https://docs.csc.fi/"
 
 

@@ -26,7 +26,7 @@ parameters:
   description: Email address of the recipient
   required: true
 
-- name: OUTPUT_MARKDOWN
+- name: OUTPUT_IN_MARKDOWN
   description: Send email attachment in Markdown format
   value: false
   required: false
@@ -54,8 +54,8 @@ objects:
         env:
         - name: EMAIL_RECIPIENT
           value: ${EMAIL_RECIPIENT}
-        - name: OUTPUT_MARKDOWN
-          value: ${OUTPUT_MARKDOWN}
+        - name: OUTPUT_IN_MARKDOWN
+          value: ${OUTPUT_IN_MARKDOWN}
         from:
           kind: ImageStreamTag
           name: python:3.9-ubi8
