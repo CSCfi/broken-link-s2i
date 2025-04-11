@@ -28,7 +28,7 @@ parameters:
 
 - name: OUTPUT_IN_MARKDOWN
   description: Send email attachment in Markdown format
-  value: "false"
+  value: "true"
   required: false
 
 objects:
